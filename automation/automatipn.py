@@ -11,31 +11,65 @@ with open('assets/potentialcontacts.txt', 'r') as file:
 
 extracting_phone_numbers = re.findall(r'\d{3}.\d{3}.\d{4}|\d{3}.\d{4}',content)
 
+
+# Duplicate:
+numbers = []
 for phone in extracting_phone_numbers:
-    if len(phone) == 10:
-        new_phone = phone.split('-').sorted(key=int)
-        final_phone = '-'.join(new_phone)
+
+    if phone not in numbers:
+         
+        numbers.append(phone) 
+
+for phone in numbers:
         
-        
+            if len(phone) == 12:
+                
+                new_phone =re.sub('\.','-',phone)
+                temp_1= re.sub('\)','-',new_phone)
+                temp = temp_1.split('-')
+                # print(temp)
+                temp.sort(key=int)
+                # print(temp)
+                final_phone = '-'.join(temp)
+                print(final_phone)
+                with open('assets/phone_numbers.txt','a') as file:
+                     file.write(f'{final_phone}\n')
+                
+for phone in numbers:
+    
         with open('assets/phone_numbers.txt','a') as file:
-        
-           file.write(final_phone)
+            if len(phone) == 7:
+                
+                new_phone =re.sub('\.','-',phone)
+                temp_1= re.sub('\)','-',new_phone)
+                temp = temp_1.split('-')
+                temp.sort(key=int)
+                final_phone = '-'.join(temp)
 
-
-    if len(phone) == 7:
-        new_phone = phone.split('-').sorted(key=int)
-        final_phone = '-'.join(new_phone)
-    with open('assets/phone_numbers.txt','a') as file:
-        
-           file.write(final_phone)
+          
+            #     new_phone = re.sub('\.','-',phone).split('-').sorted(key=int)
+            #     final_phone = '-'.join(new_phone)
+            
+                print(final_phone)
+                
+                file.write(f'206-{final_phone}\n')
+                
 
 extracting_email = re.findall(r'[\w\.-]+@[\w\.-]+',content)
 
-for email in extracting_email: 
+# Duplicate:
+emails = []
+for email in extracting_email:
+
+    if email not in emails:
+         
+        emails.append(email) 
+
+for email in emails: 
 
     with open('assets/emails.txt','a') as file:
         
-           file.write(email)
+           file.write(f'{email}\n')
 
 ## testing 
 
@@ -54,8 +88,6 @@ with open('contacts.txt', 'w+') as file:
 
 
 if __name__ == "__main__":
-
-   print(extracting_phone_numbers)
-   print(extracting_email)
-   print(final_phone)
- 
+     print(list)
+     print(extracting_phone_numbers[1])
+   
